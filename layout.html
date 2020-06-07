@@ -67,7 +67,7 @@
 <body>
     <div id="main"></div>
     <script type="text/babel">
-        const unit = 1.97;
+        const unit = 1.894;
         const s = p => String(p * unit) + "cm";
 
         const images = [];
@@ -77,6 +77,16 @@
                 name: "images/number" + i + ".png",
                 width: "13mm",
                 height: "13mm"
+            })
+        }
+
+        images.push({});
+
+        for (var i = 1; i <= 20; i++) {
+            images.push({
+                name: "images/tile" + i + ".jpg",
+                width: s(5),
+                height: s(5)
             })
         }
 
@@ -156,18 +166,17 @@
  
         images.push({});
 
-        const turnScale = 1.3;
         for (var i = 1; i <= 5; i++) {
             images.push({
                 name: "images/turn" + i + ".jpg",
-                width: s(1*turnScale),
-                height: s(1*turnScale)
+                width: s(1),
+                height: s(1)
             })
         }
 
         images.push({});
 
-        var width = 8*turnScale;
+        var width = 8;
         var height = (width / 1427) * 720;
         images.push({
             name: "images/turntrack.jpg",
@@ -178,11 +187,39 @@
         images.push({});
 
         var width = 10;
+        var height = (width / 2404) * 1320;
+ 
+        for (var i = 1; i <= 5; i++) {
+            images.push({
+                name: "images/bonus.jpg",
+                width: s(width),
+                height: s(height)
+            })
+        }
+
+ 
+        images.push({});
+
+        var width = 10;
         var height = (width / 2480) * 3508;
         images.push({ name: "images/upgrade.jpg", width: s(width), height:s(height) })
 
-        var width = 15;
-        var width = (height / 7440) * 3717;
+        function App(props) {
+            return (<div className="abook">
+                <div className="apage">
+                    <div className="asubpage">
+                        <Cards/>
+                        <Image/>
+                        {images.map(i => <Image {...i} />)}
+                    </div>
+                </div>
+            </div>);
+        }
+
+        images.push({});
+
+        var width = 10;
+        var height = (width / 3717) * 7440;
  
         for (var i = 1; i <= 5; i++) {
             images.push({
@@ -192,15 +229,7 @@
             })
         }
 
-        function App(props) {
-            return (<div>
-                <Tiles/>
-                <Image/>
-                {images.map(i => <Image {...i} />)}
-                <Image/>
-                <Cards/>
-            </div>);
-        }
+
 
         function Image(props) {
             if (props.name) {
@@ -214,9 +243,15 @@
         function Cards(props) {
             const cardDistribution = [12, 6, 6, 3, 3, 6, 18, 12, 6, 6, 3, 6, 3, 6, 12, 6, 6, 3, 12, 3, 3, 6, 12, 3, 12, 6, 6, 3, 6, 6, 12, 6, 6, 3, 6, 12];
             const cards = [];
+            var count = 0;
             for(var i = 16; i < cardDistribution.length; i++) {
                 for(var j = 0; j < cardDistribution[i]; j++) {
+                    count++;
                     cards.push(<Card number={i}/>);
+                    if (count == 9) {
+                        cards.push(<br />);
+                        count = 0;
+                    }
                 }
             }
 
@@ -227,36 +262,14 @@
             
             const width = 6;
             const height = 8.7;
-            const pixel = 2 * 2.54 / 96;
 
             const x = props.number % 6 + 1;
             const y = Math.floor(props.number / 6) + 1;
 
-            return <span style={{outline: "1px solid black", outlineOffset: "-1px", float: "left", width: width + "cm", height: height + "cm", overflow: "hidden"}}> 
-                    <img src={"images/row-" + x + "-col-" + y + ".jpg"} style={{ width: width + (pixel * 2) + "cm", height: height + (pixel * 2) + "cm", marginTop: -pixel + "cm", marginLeft: -pixel + "cm"}} /> 
-                </span>
-        }
-
-        function Tiles(props) {
-            const tiles = [];
-            var count = 0;
-            for (var i = 1; i <= 20; i++) {
-                tiles.push(<Tile number={i}/>);
-            }
-            return <div>{tiles}</div>;
-        }
-
-        function Tile(props) {
+            return  <Image name={"images/row-" + x + "-col-" + y + ".jpg"} width="6cm" height="8.7cm" card={true}/>
             
-            const width = 5*unit;
-            const pixel = 2 * 2.54 / 96;
-
-            return <span style={{outline: "1px solid black", outlineOffset: "-1px", float: "left", width: width + "cm", height: width + "cm", overflow: "hidden"}}> 
-                    <img src={"images/tile" + props.number + ".jpg"} style={{ width: width + (pixel * 2) + "cm", height: width + (pixel * 2) + "cm", marginTop: -pixel + "cm", marginLeft: -pixel + "cm"}} /> 
-                </span>
+           // <span style={{display: "block", pageBreakBefore: "avoid", pageBreakAfter: "avoid", pageBreakInside: "avoid", outline: "2px solid black", outlineOffset: "-2px", float: "left", width: width + "cm", height: height + "cm", overflow: "hidden"}}> <img src="images/cards.jpg" style={{ width: width * 6 + "cm", height: height*6 + "cm", marginTop: -1 * y * height + "cm", marginLeft: -1 * x * width + "cm"}} /> </span>
         }
-
-
 
         ReactDOM.render(<App />, document.getElementById('main'));
     </script>

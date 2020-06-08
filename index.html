@@ -214,8 +214,8 @@
         function Cards(props) {
             const cardDistribution = [12, 6, 6, 3, 3, 6, 18, 12, 6, 6, 3, 6, 3, 6, 12, 6, 6, 3, 12, 3, 3, 6, 12, 3, 12, 6, 6, 3, 6, 6, 12, 6, 6, 3, 6, 12];
             const cards = [];
-            for(var i = 16; i < cardDistribution.length; i++) {
-                for(var j = 0; j < cardDistribution[i]; j++) {
+            for(var i = 1; i < cardDistribution.length; i++) {
+                for(var j = 0; j < cardDistribution[i - 1]; j++) {
                     cards.push(<Card number={i}/>);
                 }
             }

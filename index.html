@@ -220,7 +220,7 @@ var oldcount = 0;
 if(oldindex >=0) {
 oldcount = cardDistribution[oldindex];
 }
-                for(var j = 0; j < cardDistribution[i]-oldindex; j++) {
+                for(var j = 0; j < cardDistribution[i]-oldcount; j++) {
                     cards.push(<Card number={i}/>);
                 }
             }

@@ -215,7 +215,12 @@
             const cardDistribution = [12, 6, 6, 3, 3, 6, 18, 12, 6, 6, 3, 6, 3, 6, 12, 6, 6, 3, 12, 3, 3, 6, 12, 3, 12, 6, 6, 3, 6, 6, 12, 6, 6, 3, 6, 12];
             const cards = [];
             for(var i = 1; i < cardDistribution.length; i++) {
-                for(var j = 0; j < cardDistribution[i - 1]; j++) {
+var oldindex = (i%6)*6 +Math.floor(i/6)-1;
+var oldcount = 0;
+if(oldindex >=0) {
+oldcount = cardDistribution[oldindex];
+}
+                for(var j = 0; j < cardDistribution[i]-oldindex; j++) {
                     cards.push(<Card number={i}/>);
                 }
             }
@@ -233,7 +238,7 @@
             const y = Math.floor(props.number / 6) + 1;
 
             return <span style={{outline: "1px solid black", outlineOffset: "-1px", float: "left", width: width + "cm", height: height + "cm", overflow: "hidden"}}> 
-                    <img src={"images/row-" + x + "-col-" + y + ".jpg"} style={{ width: width + (pixel * 2) + "cm", height: height + (pixel * 2) + "cm", marginTop: -pixel + "cm", marginLeft: -pixel + "cm"}} /> 
+                    <img src={"images/row-" + y + "-col-" + x + ".jpg"} style={{ width: width + (pixel * 2) + "cm", height: height + (pixel * 2) + "cm", marginTop: -pixel + "cm", marginLeft: -pixel + "cm"}} /> 
                 </span>
         }
 
